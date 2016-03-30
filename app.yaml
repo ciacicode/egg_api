@@ -19,9 +19,8 @@ handlers:
 # The script value is in the format <path.to.module>.<wsgi_application>
 # where <wsgi_application> is a WSGI application object.
 handlers:
-- url: /admin/.*
-  script: $PYTHON_LIB/google/appengine/ext/admin
-  login: admin
+- url: /remoteapi.*
+  script: google.appengine.ext.remote_api.handler.application
 - url: .*  # This regex directs all routes to main.app
   script: main.app
 
