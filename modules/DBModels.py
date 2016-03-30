@@ -3,7 +3,7 @@ __author__ = 'ciacicode'
 from main import app
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-import bcrypt
+from bcrypt import bcrypt
 import datetime
 import os
 import re
