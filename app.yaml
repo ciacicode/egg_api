@@ -8,7 +8,6 @@ api_version: 1
 threadsafe: yes
 
 # Handlers define how to route requests to your application.
-handlers:
 
 # App Engine serves and caches static files contained in the listed directories
 # (and subdirectories). Uncomment and set the directory as needed.
