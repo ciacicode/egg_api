@@ -3,21 +3,20 @@
 # Import the Flask Framework
 from flask import Flask
 from configs.config import Config
-
-#create the app
-app = Flask(__name__)
-app.config.from_object(Config)
-
-# import the modules that feed on the app
-
+from modules.DBModels import User, Household, IndividualProduct, OcadoReceipt, db
+from modules.DBActions import UserSchema, HouseholdSchema, IndividualProductSchema, OcadoRecepitSchema
 from modules.DBActions import get_products, add_household, add_product_manual, add_receipt, add_user, get_user, get_household
 from flask_restful import Api, Resource, reqparse, abort
 from flask import request, jsonify
 import pdb
 
+app = Flask(__name__)
+app.config.from_object(Config)
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
 api = Api(app)
+
+
 
 
 # argument parser
