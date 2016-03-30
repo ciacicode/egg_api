@@ -1,5 +1,5 @@
 numpy==1.9.3
-abstract-rendering==0.5.1
+Cython==0.22
 alabaster==0.7.7
 anaconda-client==1.2.2
 aniso8601==1.1.0
@@ -30,7 +30,6 @@ conda-env==2.4.1
 configobj==5.0.6
 cryptography==0.8
 cycler==0.9.0
-Cython==0.22
 cytoolz==0.7.2
 DataShape==0.4.4
 decorator==4.0.9
