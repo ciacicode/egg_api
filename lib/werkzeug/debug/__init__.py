@@ -72,8 +72,16 @@ def get_pin_and_cookie_name(app):
 
     modname = getattr(app, '__module__',
                       getattr(app.__class__, '__module__'))
+
+    try:
+        # `getpass.getuser()` imports the `pwd` module,
+        # which does not exist in the Google App Engine sandbox.
+        username = getpass.getuser()
+    except ImportError:
+        username = None
+
     bits = [
-        getpass.getuser(),
+        username,
         str(uuid.getnode()),
         modname,
         getattr(app, '__name__', getattr(app.__class__, '__name__')),
@@ -81,6 +89,7 @@ def get_pin_and_cookie_name(app):
 
     mod = sys.modules.get(modname)
     bits.append(getattr(mod, '__file__', None))
+    bits.append('cookiesalt')
 
     h = hashlib.md5()
     for bit in bits:
@@ -93,7 +102,6 @@ def get_pin_and_cookie_name(app):
     if num is None:
         num = ('%09d' % int(h.hexdigest(), 16))[:9]
 
-    h.update('cookiesalt')
     cookie_name = '__wzd' + h.hexdigest()[:12]
 
     # Format the pincode in groups of digits for easier remembering if

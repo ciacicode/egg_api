@@ -13,11 +13,12 @@ app.config.from_object(Config)
 from modules.DBActions import get_products, add_household, add_product_manual, add_receipt, add_user, get_user, get_household
 from flask_restful import Api, Resource, reqparse, abort
 from flask import request, jsonify
+from flask_restful_swagger import swagger
 import pdb
 
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
-api = Api(app)
+api = swagger.docs(Api(app))
 
 
 # argument parser
@@ -70,7 +71,7 @@ class HouseholdEndpoint(Resource):
         # function to create a new household
         parser.add_argument('email', required=True, help ='You must provide an email address')
         parser.add_argument('name', required=True, help='You must provide a name for the household')
-        args= parser.parse_args()
+        args = parser.parse_args()
         user_payload = {'email': args['email']}
         household_payload = {'name': args['name']}
         resp = add_household(user_payload, household_payload)

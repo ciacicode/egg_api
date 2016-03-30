@@ -4,6 +4,7 @@ from modules.DBModels import *
 from operator import itemgetter
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
+import pdb
 
 
 # add to database functions
@@ -130,6 +131,7 @@ def add_household(user_payload, household_payload):
     :param household_payload:
     :return:household dict
     """
+    pdb.set_trace()
     check = check_household_exists(user_payload)
     household_schema = HouseholdSchema()
     if check:
@@ -271,7 +273,7 @@ def login_user(user_payload):
         # get the password associated with the user and encode it
         hashed = user.password.encode('utf-8')
         # check if the hashed password corresponds to the new hashed of the input password
-        if hashpw(password.encode('utf-8'), hashed) == hashed:
+        if bcrypt.hashpw(password.encode('utf-8'), hashed) == hashed:
             user = user_schema.dump(user).data
             user['household_id'] = household_id
             # remove password !

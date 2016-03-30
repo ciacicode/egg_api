@@ -1,0 +1,130 @@
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+Description: *******************
+        marshmallow-jsonapi
+        *******************
+        
+        .. image:: https://badge.fury.io/py/marshmallow-jsonapi.png
+            :target: http://badge.fury.io/py/marshmallow-jsonapi
+            :alt: Latest version
+        
+        .. image:: https://travis-ci.org/marshmallow-code/marshmallow-jsonapi.png
+            :target: https://travis-ci.org/marshmallow-code/marshmallow-jsonapi
+            :alt: Travis-CI
+        
+        Homepage: http://marshmallow-jsonapi.rtfd.org/
+        
+        JSON API 1.0 (`https://jsonapi.org <http://jsonapi.org/>`_) formatting with `marshmallow <https://marshmallow.readthedocs.org>`_.
+        
+        marshmallow-jsonapi provides a simple way to produce JSON API-compliant data in any Python web framework.
+        
+        .. code-block:: python
+        
+            from marshmallow_jsonapi import Schema, fields
+        
+            class PostSchema(Schema):
+                id = fields.Str(dump_only=True)
+                title = fields.Str()
+        
+                author = fields.Relationship(
+                    '/authors/{author_id}',
+                    related_url_kwargs={'author_id': '<author.id>'},
+                )
+        
+                comments = fields.Relationship(
+                    '/posts/{post_id}/comments',
+                    related_url_kwargs={'post_id': '<id>'},
+                    # Include resource linkage
+                    many=True, include_data=True,
+                    type_='comments'
+                )
+        
+                class Meta:
+                    type_ = 'posts'
+                    strict = True
+        
+            post_schema = PostSchema()
+            post_schema.dump(post).data
+            # {
+            #     "data": {
+            #         "id": "1",
+            #         "type": "posts"
+            #         "attributes": {
+            #             "title": "JSON API paints my bikeshed!"
+            #         },
+            #         "relationships": {
+            #             "author": {
+            #                 "links": {
+            #                     "related": "/authors/9"
+            #                 }
+            #             },
+            #             "comments": {
+            #                 "links": {
+            #                     "related": "/posts/1/comments/"
+            #                 }
+            #                 "data": [
+            #                     {"id": 5, "type": "comments"},
+            #                     {"id": 12, "type": "comments"}
+            #                 ],
+            #             }
+            #         },
+            #     }
+            # }
+        
+        Installation
+        ============
+        ::
+        
+            pip install marshmallow-jsonapi
+        
+        
+        Documentation
+        =============
+        
+        Full documentation is available at https://marshmallow-jsonapi.readthedocs.org/.
+        
+        Requirements
+        ============
+        
+        - Python >= 2.7 or >= 3.3
+        
+        Project Links
+        =============
+        
+        - Docs: http://marshmallow-jsonapi.rtfd.org/
+        - Changelog: http://marshmallow-jsonapi.readthedocs.org/en/latest/changelog.html
+        - PyPI: https://pypi.python.org/pypi/marshmallow-jsonapi
+        - Issues: https://github.com/marshmallow-code/marshmallow-jsonapi/issues
+        
+        License
+        =======
+        
+        MIT licensed. See the bundled `LICENSE <https://github.com/marshmallow-code/marshmallow-jsonapi/blob/master/LICENSE>`_ file for more details.
+        
+Keywords: marshmallow-jsonapi marshmallow marshalling serialization jsonapi deserialization validation
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5

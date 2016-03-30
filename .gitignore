@@ -6,6 +6,5 @@
 configs/config.py
 configs/config_prod.py
 receipts
-lib
 requirements.txt~
 main.py~

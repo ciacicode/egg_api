@@ -13,6 +13,7 @@ Flask-Bootstrap==3.3.5.7
 flask-marshmallow==0.6.2
 flask-paginate==0.3.0
 Flask-RESTful==0.3.5
+flask-restful-swagger==0.19
 Flask-SQLAlchemy==2.0
 Flask-WTF==0.11
 gcloud==0.11.0
