@@ -4,7 +4,6 @@
 .DS_Store
 .idea
 configs/config.py
-configs/config_prod.py
 receipts
 requirements.txt~
 main.py~
