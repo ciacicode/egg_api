@@ -8,7 +8,6 @@ import datetime
 import os
 import re
 from lxml import etree
-
 import pdb
 
 # Order matters: Initialize SQLAlchemy before Marshmallow
@@ -21,6 +20,7 @@ def create_db():
     Create database
     """
     db.create_all()
+
 
 
 class QuantitativeValue(object):
@@ -569,5 +569,8 @@ class Household(db.Model):
 class HouseholdSchema(ma.ModelSchema):
     class Meta:
         model = Household
+
+# initialise tables
+create_db()
 
 
