@@ -2,7 +2,8 @@
 # don't include third-party dependencies.
 !lib/README.md
 .DS_Store
-configs/
+configs/config.py
+configs/config_prod.py
 .idea
 receipts
 requirements.txt~
