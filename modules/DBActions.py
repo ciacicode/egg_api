@@ -131,7 +131,6 @@ def add_household(user_payload, household_payload):
     :param household_payload:
     :return:household dict
     """
-    pdb.set_trace()
     check = check_household_exists(user_payload)
     household_schema = HouseholdSchema()
     if check:

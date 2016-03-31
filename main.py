@@ -21,9 +21,6 @@ import pdb
 api = swagger.docs(Api(app))
 
 
-# argument parser
-parser = reqparse.RequestParser()
-
 # endpoints as classes
 
 class UserEndpoint(Resource):
@@ -33,6 +30,7 @@ class UserEndpoint(Resource):
 
     def get(self):
         # function to get a user
+        parser = reqparse.RequestParser()
         parser.add_argument('email', required=True, help='You must provide an email address')
         args = parser.parse_args()
         resp = get_user(args)
@@ -40,6 +38,7 @@ class UserEndpoint(Resource):
 
     def post(self):
         # function to create a new user
+        parser = reqparse.RequestParser()
         parser.add_argument('email', required=True, help='You must provide an email address')
         parser.add_argument('password', required=True, help='You must provide a password')
         args = parser.parse_args()
@@ -62,6 +61,7 @@ class HouseholdEndpoint(Resource):
     """
     def get(self):
         # function to get a household
+        parser = reqparse.RequestParser()
         parser.add_argument('email', required=True, help='You must provide an email address')
         args = parser.parse_args()
         resp = get_household(args)
@@ -69,6 +69,7 @@ class HouseholdEndpoint(Resource):
 
     def post(self):
         # function to create a new household
+        parser = reqparse.RequestParser()
         parser.add_argument('email', required=True, help ='You must provide an email address')
         parser.add_argument('name', required=True, help='You must provide a name for the household')
         args = parser.parse_args()

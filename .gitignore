@@ -3,7 +3,7 @@
 !lib/README.md
 .DS_Store
 .idea
-configs/config_dev.py
+configs/config.py
 configs/config_prod.py
 receipts
 requirements.txt~
