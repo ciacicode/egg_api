@@ -2,10 +2,10 @@
 # including URL routing, versions, static file uploads, etc. See
 # https://developers.google.com/appengine/docs/python/config/appconfig
 # for details.
-
+application: egg-api
 runtime: python27
 api_version: 1
-threadsafe: yes
+threadsafe: false
 
 # Handlers define how to route requests to your application.
 
@@ -16,11 +16,18 @@ threadsafe: yes
 builtins:
 - remote_api: on
 
+# Activate email receiving
+
+inbound_services:
+- mail
+
 # This handler tells app engine how to route requests to a WSGI application.
 # The script value is in the format <path.to.module>.<wsgi_application>
 # where <wsgi_application> is a WSGI application object.
 handlers:
-
+- url: /_ah/mail/.+ # route everything to handle incoming
+  script: handle_incoming_email.app
+  login: admin
 - url: .*  # This regex directs all routes to main.app
   script: main.app
 

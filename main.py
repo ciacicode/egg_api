@@ -16,10 +16,14 @@ from flask import request, jsonify
 from flask_restful_swagger import swagger
 import pdb
 
+
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
 api = swagger.docs(Api(app))
 
+@app.route('/', methods=['GET'])
+def home():
+    return 'Hellow World!'
 
 # endpoints as classes
 
