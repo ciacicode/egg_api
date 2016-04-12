@@ -13,8 +13,12 @@ class LogSenderHandler(InboundMailHandler):
         logging.info("Received a message from: " + mail_message.sender)
         # upload attachment to cloud storage
         attachment = mail_message.attachments
-        print type(attachment)
-        print len(attachment)
+        print attachment
+        content = attachment[0]
+        print type(content)
+        print content
+        #for property, value in vars(content).iteritems():
+            #print property, ": ", value
         
 
 
