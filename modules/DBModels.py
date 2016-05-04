@@ -8,7 +8,10 @@ import datetime
 import os
 import re
 from lxml import etree
+import requests
+from googleapiclient import http
 import pdb
+from handle_incoming_email import create_service
 
 # Order matters: Initialize SQLAlchemy before Marshmallow
 db = SQLAlchemy(app)
@@ -163,16 +166,36 @@ class OcadoReceipt(db.Model):
         """
         :return: directory of xml file
         """
-        out_pointer = self.file_pointer[:-4]
-        xml_dir = out_pointer + '.html'
-        command = 'pdftohtml ' + '-xml ' + self.file_pointer + ' ' + xml_dir
-        os.system(command)
-        return xml_dir + '.xml'
+        # to rewrite
+        #out_pointer = self.file_pointer[:-4]
+        #xml_dir = out_pointer + '.html'
+        #command = 'pdftohtml ' + '-xml ' + self.file_pointer + ' ' + xml_dir
+        #os.system(command)
+        #return xml_dir + '.xml'
+        # download pdf
+        pdb.set_trace()
+        pdf = download_file(self.file_pointer)
+
+        # access pdf and transform in xml
+        # upload xml
+    @staticmethod
+    def download_file(url):
+        local_filename = url.split('/')[-1]
+        # NOTE the stream=True parameter
+        r = requests.get(url, stream=True)
+        with open(local_filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024):
+                if chunk: # filter out keep-alive new chunks
+                    f.write(chunk)
+                    #f.flush() commented by recommendation from J.F.Sebastian
+        return local_filename
+
 
     def get_xml_root(self):
         """
         :return: page object of parsed xml file
         """
+        # to rewrite
         file_path = self.xml_pointer
         tree = etree.parse(file_path)
         root = tree.getroot()
