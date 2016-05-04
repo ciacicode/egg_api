@@ -174,7 +174,8 @@ class OcadoReceipt(db.Model):
         #return xml_dir + '.xml'
         # download pdf
         pdb.set_trace()
-        pdf = download_file(self.file_pointer)
+        pdf = self.download_file(self.file_pointer)
+        print pdf
 
         # access pdf and transform in xml
         # upload xml

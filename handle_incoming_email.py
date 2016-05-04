@@ -9,7 +9,6 @@ from googleapiclient.discovery import build
 from googleapiclient import http
 import cStringIO
 import base64
-from flask import jsonify
 from modules.DBActions import add_receipt
 
 credentials = GoogleCredentials.get_application_default()
@@ -24,7 +23,7 @@ def create_service():
 
 class LogSenderHandler(InboundMailHandler):
     def receive(self, mail_message):
-        sender = mail_message.sender
+        email = mail_message.sender
         # upload attachment to cloud storage
         filename = 'any'
         body = 'eny'
@@ -44,9 +43,8 @@ class LogSenderHandler(InboundMailHandler):
         # file uploaded
         res = req.execute()
         # create response with media link and email of the user
-        output = {'mediaLink': res['mediaLink'], 'email': str(sender)}
-        response = jsonify(output)
-        response.status_code = 201
-        return response
+        pointer = res['mediaLink']
+        payload = {'seller': 'ocado', 'file_pointer': pointer, 'price_currency': 'GBP'}
+        add_receipt(email, payload)
 
 app = webapp2.WSGIApplication([LogSenderHandler.mapping()], debug=True)

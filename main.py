@@ -10,7 +10,7 @@ app.config.from_object(Config)
 
 # import the modules that feed on the app
 
-from modules.DBActions import get_products, add_household, add_product_manual, add_receipt, add_user, get_user, get_household
+from modules.DBActions import get_products, add_household, add_product_manual, add_user, get_user, get_household
 from flask_restful import Api, Resource, reqparse, abort
 from flask import request, jsonify
 from flask_restful_swagger import swagger

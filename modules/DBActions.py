@@ -164,9 +164,9 @@ def check_receipt_exists(receipt_payload):
     else:
         return True
 
-def add_receipt(household, receipt_payload):
+def add_receipt(email, receipt_payload):
     """
-    :param household is a household object
+    :param user email
     :param receipt_payload: {seller:, file_pointer:, price_currency:}
     :return: receipt dict
     """
@@ -174,7 +174,9 @@ def add_receipt(household, receipt_payload):
     ocadoreceipt_schema = OcadoRecepitSchema()
     check = check_receipt_exists(receipt_payload)
     # fetch the database household object
-    household = Household.query.filter_by(id=household['id']).first()
+    user = User.query.filter_by(email=email).first()
+    household_id = user.household_id
+    household = Household.query.filter_by(id=household_id).first()
     if check:
         receipt = OcadoReceipt.query.filter_by(file_pointer=receipt_payload['file_pointer']).first()
         # a receipt exists, let's extract the products from the database
