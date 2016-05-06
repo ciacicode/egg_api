@@ -4,17 +4,23 @@
 from flask import Flask
 from configs.config import Config
 
+
 #create the app
 app = Flask(__name__)
 app.config.from_object(Config)
 
 # import the modules that feed on the app
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
-from modules.DBActions import get_products, add_household, add_product_manual, add_user, get_user, get_household
-from flask_restful import Api, Resource, reqparse, abort
+# Order matters: Initialize SQLAlchemy before Marshmallow
+db = SQLAlchemy(app)
+ma = Marshmallow(app)
+
+from modules.DBModels import *
+from flask_restful import Api, Resource, reqparse
 from flask import request, jsonify
 from flask_restful_swagger import swagger
-import pdb
 
 
 # Note: We don't need to call run() since our application is embedded within
@@ -68,7 +74,7 @@ class HouseholdEndpoint(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('email', required=True, help='You must provide an email address')
         args = parser.parse_args()
-        resp = get_household(args)
+        resp = Household.get_household(args)
         return resp
 
     def post(self):

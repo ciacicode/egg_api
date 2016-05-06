@@ -1,9 +1,10 @@
 __author__ = 'ciacicode'
 from flask import jsonify
-from modules.DBModels import *
+from modules.DBModels import User, Household, IndividualProduct, OcadoReceipt, OcadoRecepitSchema, IndividualProductSchema, HouseholdSchema, UserSchema, db
 from operator import itemgetter
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
+import bcrypt
 import pdb
 
 

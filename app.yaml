@@ -5,7 +5,7 @@
 application: egg-api
 runtime: python27
 api_version: 1
-threadsafe: false
+threadsafe: true
 version: 129
 
 # Handlers define how to route requests to your application.
@@ -27,7 +27,7 @@ inbound_services:
 # where <wsgi_application> is a WSGI application object.
 handlers:
 - url: /_ah/mail/.+ # route everything to handle incoming
-  script: handle_incoming_email.app
+  script: handle_incoming_email.application
   login: admin
 - url: .*  # This regex directs all routes to main.app
   script: main.app
